@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-16"?>
+<PROG NAME="ZBC_LOG_UTILS_TEST" VARCL="X" SUBC="1" CNAM="NIKOLAY" CDAT="20141009" UNAM="NIKOLAY" UDAT="20141010" VERN="000011" RSTAT="T" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20141010" STIME="152643" IDATE="20141010" ITIME="145759" UCCHECK="X">
+ <textPool>
+  <language SPRAS="E">
+   <textElement ID="R" ENTRY="Sample Logger application" LENGTH="25 "/>
+  </language>
+ </textPool>
+ <source>*&amp;---------------------------------------------------------------------*
+*&amp; Report  ZBC_LOG_UTILS_TEST
+*&amp;
+*&amp;---------------------------------------------------------------------*
+*&amp;
+*&amp;
+*&amp;---------------------------------------------------------------------*
+
+REPORT zbc_log_utils_test.
+
+CONSTANTS
+  : gc_object      TYPE balobj_d  VALUE &apos;ZBC_CL_LOG&apos;
+  , gc_subobject   TYPE balsubobj VALUE &apos;TEST&apos;
+  , gc_external_id TYPE balnrext  VALUE &apos;Sample&apos;.
+
+DATA
+  : go_log   TYPE REF TO zbc_cl_log
+  , gv_xml_a TYPE string
+  , gv_xml_b TYPE xstring.
+
+&quot; Create logger instance ----------------------------------------------
+
+CALL METHOD zbc_cl_log=&gt;instantiate
+  EXPORTING
+    iv_object      = gc_object
+    iv_subobject   = gc_subobject
+    iv_external_id = gc_external_id
+  RECEIVING
+    ro_log         = go_log
+  EXCEPTIONS
+    OTHERS         = 0.
+
+CALL METHOD go_log-&gt;threshold
+  EXPORTING
+    iv_threshold = zbc_cl_log=&gt;level_finest.
+
+&quot; Write ---------------------------------------------------------------
+
+CALL METHOD go_log-&gt;write
+  EXPORTING
+    iv_type  = zbc_cl_log=&gt;info
+    iv_text  = &apos;Processing Test-Document&apos;
+    iv_class = zbc_cl_log=&gt;class_medium
+    iv_level = zbc_cl_log=&gt;level_info
+  EXCEPTIONS
+    OTHERS   = 0.
+
+CALL METHOD go_log-&gt;write
+  EXPORTING
+    iv_type  = zbc_cl_log=&gt;info
+    iv_text  = &apos;Generating document&apos;
+    iv_class = zbc_cl_log=&gt;class_additional_information
+    iv_level = zbc_cl_log=&gt;level_fine
+  EXCEPTIONS
+    OTHERS   = 0.
+
+CONCATENATE &apos;&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&apos;
+            &apos;&lt;SampleDocument id=&quot;01&quot;&gt;&apos;
+            &apos;  &lt;Text&gt;Hello, World!&lt;/Text&gt;&apos;
+            &apos;  &lt;Author&gt;Bob&lt;/Author&gt;&apos;
+            &apos;&lt;/SampleDocument&gt;&apos;
+       INTO gv_xml_a SEPARATED BY cl_abap_char_utilities=&gt;cr_lf.
+
+CALL FUNCTION &apos;SCMS_STRING_TO_XSTRING&apos;
+  EXPORTING
+    text   = gv_xml_a
+  IMPORTING
+    buffer = gv_xml_b
+  EXCEPTIONS
+    OTHERS = 0.
+
+CALL METHOD go_log-&gt;write
+  EXPORTING
+    iv_type    = zbc_cl_log=&gt;info
+    iv_text    = &apos;Document Source (XML)&apos;
+    iv_class   = zbc_cl_log=&gt;class_additional_information
+    iv_level   = zbc_cl_log=&gt;level_info
+    iv_sort    = &apos;XML&apos;
+    iv_details = gv_xml_b
+    iv_viewer  = &apos;ZBC_LOG_VIEWER_XML_XSTRING&apos;
+  EXCEPTIONS
+    OTHERS     = 0.
+
+CALL METHOD go_log-&gt;write
+  EXPORTING
+    iv_type  = zbc_cl_log=&gt;info
+    iv_text  = &apos;Document has been generated and processed&apos;
+    iv_class = zbc_cl_log=&gt;class_additional_information
+    iv_level = zbc_cl_log=&gt;level_fine
+  EXCEPTIONS
+    OTHERS   = 0.
+
+&quot; Save ----------------------------------------------------------------
+
+CALL METHOD go_log-&gt;save
+  EXCEPTIONS
+    OTHERS = 0.</source>
+</PROG>
+

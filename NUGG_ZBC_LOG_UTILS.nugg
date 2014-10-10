@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-16"?>
+<nugget name="ZBC_LOG_UTILS">
+ <CLAS CLSNAME="ZBC_CL_LOG" VERSION="1" LANGU="E" DESCRIPT="Application Log" UUID="DC251451E6D21EE493F74F1837750954" CATEGORY="00" EXPOSURE="0" STATE="1" RELEASE="0" AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141009" CHGDANYON="00000000" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" R3RELEASE="702" CLSBCCAT="00" MSG_ID="ZBC_CL_LOG_MSGS" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+  <publicSection>class ZBC_CL_LOG definition
+  public
+  final
+  create private .
+
+public section.
+*&quot;* public components of class ZBC_CL_LOG
+*&quot;* do not include other source files here!!!
+
+  constants LEVEL_FINEST type BALLEVEL value &apos;1&apos;. &quot;#EC NOTEXT
+  constants LEVEL_FINER type BALLEVEL value &apos;2&apos;. &quot;#EC NOTEXT
+  constants LEVEL_FINE type BALLEVEL value &apos;3&apos;. &quot;#EC NOTEXT
+  constants LEVEL_CONFIG type BALLEVEL value &apos;4&apos;. &quot;#EC NOTEXT
+  constants LEVEL_INFO type BALLEVEL value &apos;5&apos;. &quot;#EC NOTEXT
+  constants LEVEL_WARNING type BALLEVEL value &apos;6&apos;. &quot;#EC NOTEXT
+  constants LEVEL_SEVERE type BALLEVEL value &apos;7&apos;. &quot;#EC NOTEXT
+  constants LEVEL_ALERT type BALLEVEL value &apos;8&apos;. &quot;#EC NOTEXT
+  constants LEVEL_FATAL type BALLEVEL value &apos;9&apos;. &quot;#EC NOTEXT
+  constants LEVEL_NO_THRESHOLD type BALLEVEL value &apos;0&apos;. &quot;#EC NOTEXT
+  constants INFO type BALMSGTY value &apos;I&apos;. &quot;#EC NOTEXT
+  constants SUCCESS type BALMSGTY value &apos;S&apos;. &quot;#EC NOTEXT
+  constants WARNING type BALMSGTY value &apos;W&apos;. &quot;#EC NOTEXT
+  constants ERROR type BALMSGTY value &apos;E&apos;. &quot;#EC NOTEXT
+  constants CLASS_VERY_IMPORTANT type BALPROBCL value &apos;1&apos;. &quot;#EC NOTEXT
+  constants CLASS_IMPORTANT type BALPROBCL value &apos;2&apos;. &quot;#EC NOTEXT
+  constants CLASS_MEDIUM type BALPROBCL value &apos;3&apos;. &quot;#EC NOTEXT
+  constants CLASS_ADDITIONAL_INFORMATION type BALPROBCL value &apos;4&apos;. &quot;#EC NOTEXT
+  constants CLASS_OTHER type BALPROBCL value &apos; &apos;. &quot;#EC NOTEXT
+
+  class-methods INSTANTIATE
+    importing
+      !IV_OBJECT type BALOBJ_D
+      !IV_SUBOBJECT type BALSUBOBJ
+      !IV_EXTERNAL_ID type BALNREXT
+    returning
+      value(RO_LOG) type ref to ZBC_CL_LOG
+    exceptions
+      WRONG_PARAMETERS .
+  methods WRITE
+    importing
+      !IV_TYPE type BALMSGTY default SY-MSGTY
+      !IV_TEXT type STRING optional
+      !IV_ID type BALMSGID default SY-MSGID
+      !IV_NUMBER type BALMSGNO default SY-MSGNO
+      !IV_CLASS type BALPROBCL default CLASS_OTHER
+      !IV_LEVEL type BALLEVEL default LEVEL_INFO
+      !IV_SORT type BALSORT optional
+      !IV_DETAILS type ANY optional
+      !IV_VIEWER type RS38L_FNAM optional
+    exceptions
+      PROCESSING_ERROR
+      UNKNOWN_HANDER
+      PACKING_ERROR .
+  methods SAVE
+    exceptions
+      PROCESSING_ERROR .
+  methods THRESHOLD
+    importing
+      !IV_THRESHOLD type BALLEVEL .</publicSection>
+  <protectedSection>protected section.
+*&quot;* protected components of class ZBC_CL_LOG
+*&quot;* do not include other source files here!!!</protectedSection>
+  <privateSection>private section.
+*&quot;* private components of class ZBC_CL_LOG
+*&quot;* do not include other source files here!!!
+
+  data AV_LOG_HANDLE type BALLOGHNDL .
+  data AV_THRESHOLD type BALLEVEL .
+
+  type-pools ABAP .
+  methods CONSTRUCTOR
+    importing
+      !IV_LOG_HANDLE type BALLOGHNDL
+      !IV_DISCARD type ABAP_BOOL optional .
+  methods HANDLER
+    importing
+      !IV_VIEWER type RS38L_FNAM
+      !IV_DETAILS type ANY
+    returning
+      value(RS_PARAMETERS) type BAL_S_PARM
+    exceptions
+      UNKNOWN_HANDER
+      PACKING_ERROR .</privateSection>
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <typeUsage CLSNAME="ZBC_CL_LOG" TYPEGROUP="ABAP" VERSION="1" TPUTYPE="0" IMPLICIT="X"/>
+  <forwardDeclaration>ABAP</forwardDeclaration>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="AV_LOG_HANDLE" VERSION="1" LANGU="E" DESCRIPT="Log Handle" EXPOSURE="0" STATE="1" EDITORDER="1 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLOGHNDL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="AV_THRESHOLD" VERSION="1" LANGU="E" DESCRIPT="Application Log: Level of detail" EXPOSURE="0" STATE="1" EDITORDER="2 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="CLASS_ADDITIONAL_INFORMATION" VERSION="1" LANGU="E" DESCRIPT="Problem class: Additional information" EXPOSURE="2" STATE="1" EDITORDER="20 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;4&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALPROBCL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="CLASS_IMPORTANT" VERSION="1" LANGU="E" DESCRIPT="Problem class: Important" EXPOSURE="2" STATE="1" EDITORDER="18 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;2&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALPROBCL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="CLASS_MEDIUM" VERSION="1" LANGU="E" DESCRIPT="Problem class: Medium" EXPOSURE="2" STATE="1" EDITORDER="19 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;3&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALPROBCL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="CLASS_OTHER" VERSION="1" LANGU="E" DESCRIPT="Problem class: Other" EXPOSURE="2" STATE="1" EDITORDER="21 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos; &apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALPROBCL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="CLASS_VERY_IMPORTANT" VERSION="1" LANGU="E" DESCRIPT="Problem class: Very important" EXPOSURE="2" STATE="1" EDITORDER="17 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;1&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALPROBCL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="ERROR" VERSION="1" LANGU="E" DESCRIPT="Error" EXPOSURE="2" STATE="1" EDITORDER="16 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;E&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALMSGTY" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="INFO" VERSION="1" LANGU="E" DESCRIPT="Information" EXPOSURE="2" STATE="1" EDITORDER="13 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;I&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALMSGTY" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="LEVEL_ALERT" VERSION="1" LANGU="E" DESCRIPT="Level: Alert" EXPOSURE="2" STATE="1" EDITORDER="10 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;8&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="LEVEL_CONFIG" VERSION="1" LANGU="E" DESCRIPT="Level: Config" EXPOSURE="2" STATE="1" EDITORDER="6 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;4&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="LEVEL_FATAL" VERSION="1" LANGU="E" DESCRIPT="Level: Fatal" EXPOSURE="2" STATE="1" EDITORDER="11 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;9&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="LEVEL_FINE" VERSION="1" LANGU="E" DESCRIPT="Level: Fine" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;3&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="LEVEL_FINER" VERSION="1" LANGU="E" DESCRIPT="Level: Finer" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;2&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="LEVEL_FINEST" VERSION="1" LANGU="E" DESCRIPT="Level: Finest" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;1&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="LEVEL_INFO" VERSION="1" LANGU="E" DESCRIPT="Level: Info" EXPOSURE="2" STATE="1" EDITORDER="7 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;5&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="LEVEL_NO_THRESHOLD" VERSION="1" LANGU="E" DESCRIPT="Don&apos;t use threshold" EXPOSURE="2" STATE="1" EDITORDER="12 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;0&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="LEVEL_SEVERE" VERSION="1" LANGU="E" DESCRIPT="Level: Severe" EXPOSURE="2" STATE="1" EDITORDER="9 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;7&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="LEVEL_WARNING" VERSION="1" LANGU="E" DESCRIPT="Level: Warning" EXPOSURE="2" STATE="1" EDITORDER="8 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;6&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALLEVEL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="SUCCESS" VERSION="1" LANGU="E" DESCRIPT="Success" EXPOSURE="2" STATE="1" EDITORDER="14 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;S&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALMSGTY" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZBC_CL_LOG" CMPNAME="WARNING" VERSION="1" LANGU="E" DESCRIPT="Warning" EXPOSURE="2" STATE="1" EDITORDER="15 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" ATTDECLTYP="2" ATTVALUE="&apos;W&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BALMSGTY" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="702" TYPESRC_LENG="0 "/>
+  <method CLSNAME="ZBC_CL_LOG" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="1 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" MTDTYPE="2" MTDDECLTYP="0" R3RELEASE="702" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="CONSTRUCTOR" SCONAME="IV_LOG_HANDLE" VERSION="1" LANGU="E" DESCRIPT="Log Handle" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALLOGHNDL"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="CONSTRUCTOR" SCONAME="IV_DISCARD" VERSION="1" LANGU="E" DESCRIPT="Discard messages below threshold level" CMPTYPE="1" MTDTYPE="2" EDITORDER="2 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X"/>
+   <source>METHOD constructor.
+
+  av_log_handle = iv_log_handle.
+
+ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZBC_CL_LOG" CMPNAME="HANDLER" VERSION="1" LANGU="E" DESCRIPT="Get Paramters for Handler" EXPOSURE="0" STATE="1" EDITORDER="2 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="702" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="HANDLER" SCONAME="IV_VIEWER" VERSION="1" LANGU="E" DESCRIPT="Viewer FM name" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="RS38L_FNAM"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="HANDLER" SCONAME="IV_DETAILS" VERSION="1" LANGU="E" DESCRIPT="Details" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="HANDLER" SCONAME="RS_PARAMETERS" VERSION="1" LANGU="E" DESCRIPT="Parameters" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDON="00000000" PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="BAL_S_PARM"/>
+   <exception CLSNAME="ZBC_CL_LOG" CMPNAME="HANDLER" SCONAME="UNKNOWN_HANDER" VERSION="1" LANGU="E" DESCRIPT="Handler ID is wrong or corresponding FMs are missing" MTDTYPE="0" EDITORDER="1 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDON="00000000"/>
+   <exception CLSNAME="ZBC_CL_LOG" CMPNAME="HANDLER" SCONAME="PACKING_ERROR" VERSION="1" LANGU="E" DESCRIPT="Unable to save supplied data" MTDTYPE="0" EDITORDER="2 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDON="00000000"/>
+   <source>METHOD handler.
+  DATA
+    : ls_log_data   TYPE zbc_log_data
+    , ls_parameter  TYPE bal_s_par.
+
+  CALL FUNCTION &apos;FUNCTION_EXISTS&apos;
+    EXPORTING
+      funcname           = iv_viewer
+    EXCEPTIONS
+      function_not_exist = 1
+      OTHERS             = 2.
+  IF sy-subrc NE 0.
+    RAISE unknown_hander.
+  ENDIF.
+
+  &quot; Package data ------------------------------------------------------
+
+  CALL FUNCTION &apos;GUID_CREATE&apos;
+    IMPORTING
+      ev_guid_32 = ls_log_data-package_id.
+
+  TRY.
+      CALL TRANSFORMATION id
+        SOURCE data = iv_details
+        RESULT XML ls_log_data-content.
+    CATCH cx_root.
+      RAISE packing_error.
+  ENDTRY.
+
+  ls_log_data-log_handle = av_log_handle.
+  ls_log_data-viewer     = iv_viewer.
+
+  INSERT zbc_log_data FROM ls_log_data.
+  IF sy-subrc NE 0.
+    RAISE packing_error.
+    ROLLBACK WORK.
+  ELSE.
+    COMMIT WORK.
+  ENDIF.
+
+  &quot; Fill parameters structure -----------------------------------------
+
+  ls_parameter-parname   = &apos;PACKAGE_ID&apos;.
+  ls_parameter-parvalue  = ls_log_data-package_id.
+  APPEND ls_parameter TO rs_parameters-t_par.
+  CLEAR  ls_parameter.
+
+  rs_parameters-callback-userexitf = &apos;ZBC_LOG_DETAILS_HANDLER&apos;.
+  rs_parameters-callback-userexitt = &apos;F&apos;.
+
+ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZBC_CL_LOG" CMPNAME="INSTANTIATE" VERSION="1" LANGU="E" DESCRIPT="Create instance of Logger" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="1" R3RELEASE="702" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="INSTANTIATE" SCONAME="IV_OBJECT" VERSION="1" LANGU="E" DESCRIPT="Object Name (SLG0)" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALOBJ_D"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="INSTANTIATE" SCONAME="IV_SUBOBJECT" VERSION="1" LANGU="E" DESCRIPT="Sub-object (SLG0)" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALSUBOBJ"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="INSTANTIATE" SCONAME="IV_EXTERNAL_ID" VERSION="1" LANGU="E" DESCRIPT="External ID" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALNREXT"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="INSTANTIATE" SCONAME="RO_LOG" VERSION="1" LANGU="E" DESCRIPT="Application Log Instance" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="ZBC_CL_LOG"/>
+   <exception CLSNAME="ZBC_CL_LOG" CMPNAME="INSTANTIATE" SCONAME="WRONG_PARAMETERS" VERSION="1" LANGU="E" DESCRIPT="Check Object and Sub-object names" MTDTYPE="0" EDITORDER="1 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000"/>
+   <source>METHOD instantiate.
+  DATA
+    : ls_header     TYPE bal_s_log
+    , lv_log_handle TYPE balloghndl.
+
+  ls_header-object    = iv_object.
+  ls_header-subobject = iv_subobject.
+  ls_header-extnumber = iv_external_id.
+
+  CALL FUNCTION &apos;BAL_LOG_CREATE&apos;
+    EXPORTING
+      i_s_log                 = ls_header
+    IMPORTING
+      e_log_handle            = lv_log_handle
+    EXCEPTIONS
+      log_header_inconsistent = 1
+      OTHERS                  = 2.
+
+  IF sy-subrc &lt;&gt; 0.
+    RAISE wrong_parameters.
+  ELSE.
+
+    CREATE OBJECT ro_log
+      EXPORTING
+        iv_log_handle = lv_log_handle.
+
+    CALL METHOD ro_log-&gt;threshold
+      EXPORTING
+        iv_threshold = level_no_threshold.
+
+  ENDIF.
+
+ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZBC_CL_LOG" CMPNAME="SAVE" VERSION="1" LANGU="E" DESCRIPT="Save log data into database" EXPOSURE="2" STATE="1" EDITORDER="3 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="702" BCMTDCAT="00" BCMTDSYN="0">
+   <exception CLSNAME="ZBC_CL_LOG" CMPNAME="SAVE" SCONAME="PROCESSING_ERROR" VERSION="1" LANGU="E" DESCRIPT="Logging Error" MTDTYPE="0" EDITORDER="1 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000"/>
+   <source>METHOD save.
+  DATA
+    : lt_log_handle TYPE bal_t_logh.
+
+  APPEND av_log_handle TO lt_log_handle.
+
+  CALL FUNCTION &apos;BAL_DB_SAVE&apos;
+    EXPORTING
+      i_t_log_handle   = lt_log_handle
+    EXCEPTIONS
+      log_not_found    = 1
+      save_not_allowed = 2
+      numbering_error  = 3
+      OTHERS           = 4.
+
+  IF sy-subrc &lt;&gt; 0.
+    RAISE processing_error.
+  ENDIF.
+
+ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZBC_CL_LOG" CMPNAME="THRESHOLD" VERSION="1" LANGU="E" DESCRIPT="Set logging threshold" EXPOSURE="2" STATE="1" EDITORDER="4 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="702" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="THRESHOLD" SCONAME="IV_THRESHOLD" VERSION="1" LANGU="E" DESCRIPT="Logging threshold" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL"/>
+   <source>METHOD threshold.
+
+  av_threshold = iv_threshold.
+
+ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" VERSION="1" LANGU="E" DESCRIPT="Write message using text" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="702" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="IV_TYPE" VERSION="1" LANGU="E" DESCRIPT="Message Type (see constants)" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALMSGTY" PARVALUE="SY-MSGTY"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="IV_TEXT" VERSION="1" LANGU="E" DESCRIPT="Message Text or IV_ID/NUMBER" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="IV_ID" VERSION="1" LANGU="E" DESCRIPT="Message Class" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALMSGID" PARVALUE="SY-MSGID"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="IV_NUMBER" VERSION="1" LANGU="E" DESCRIPT="Message Number" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALMSGNO" PARVALUE="SY-MSGNO"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="IV_CLASS" VERSION="1" LANGU="E" DESCRIPT="Problem class (CLASS_*)" CMPTYPE="1" MTDTYPE="0" EDITORDER="5 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PARVALUE="CLASS_OTHER"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="IV_LEVEL" VERSION="1" LANGU="E" DESCRIPT="Detalization Level (LEVEL*)" CMPTYPE="1" MTDTYPE="0" EDITORDER="6 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PARVALUE="LEVEL_INFO"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="IV_SORT" VERSION="1" LANGU="E" DESCRIPT="Sort/Group Criterion" CMPTYPE="1" MTDTYPE="0" EDITORDER="7 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BALSORT" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="IV_DETAILS" VERSION="1" LANGU="E" DESCRIPT="Details – Data" CMPTYPE="1" MTDTYPE="0" EDITORDER="8 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDBY="NIKOLAY" CHANGEDON="20141010" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="IV_VIEWER" VERSION="1" LANGU="E" DESCRIPT="Details – Viewer FM name" CMPTYPE="1" MTDTYPE="0" EDITORDER="9 " DISPID="0 " AUTHOR="NIKOLAY" CREATEDON="20141010" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="RS38L_FNAM" PAROPTIONL="X"/>
+   <exception CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="PROCESSING_ERROR" VERSION="1" LANGU="E" DESCRIPT="Logging Error" MTDTYPE="0" EDITORDER="1 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000"/>
+   <exception CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="UNKNOWN_HANDER" VERSION="1" LANGU="E" DESCRIPT="Handler ID is wrong or corresponding FMs are missing" MTDTYPE="0" EDITORDER="2 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000"/>
+   <exception CLSNAME="ZBC_CL_LOG" CMPNAME="WRITE" SCONAME="PACKING_ERROR" VERSION="1" LANGU="E" DESCRIPT="Unable to save supplied data" MTDTYPE="0" EDITORDER="3 " AUTHOR="NIKOLAY" CREATEDON="20141009" CHANGEDON="00000000"/>
+   <source>METHOD write.
+  DATA
+    : ls_message TYPE bal_s_msg
+    , lv_buffer  TYPE string.
+
+  DEFINE write_chunk.
+    if strlen( lv_buffer ) gt 0.
+      &amp;1 = lv_buffer.
+      shift lv_buffer by 50 places left.
+    else.
+      &amp;1 = space.
+    endif.
+  END-OF-DEFINITION.
+
+  &quot; Don&apos;t write message with level below threshold --------------------
+
+  IF av_threshold NE level_no_threshold.
+    CHECK iv_level GE av_threshold.
+  ENDIF.
+
+  &quot; Message text ------------------------------------------------------
+
+  IF iv_text IS NOT INITIAL.
+
+    lv_buffer = iv_text.
+
+    write_chunk ls_message-msgv1.
+    write_chunk ls_message-msgv2.
+    write_chunk ls_message-msgv3.
+    write_chunk ls_message-msgv4.
+
+    ls_message-msgid = &apos;ZBC_CL_LOG_MSGS&apos;.
+    ls_message-msgno = &apos;000&apos;.
+
+  ELSE.
+
+    ls_message-msgid    = iv_id.
+    ls_message-msgno    = iv_number.
+
+  ENDIF.
+
+  &quot; Common message attributes -----------------------------------------
+
+  ls_message-msgty     = iv_type.
+  ls_message-probclass = iv_class.
+  ls_message-detlevel  = iv_level.
+  ls_message-alsort    = iv_sort.
+
+  &quot; Additional details ------------------------------------------------
+
+  IF iv_details IS SUPPLIED OR
+     iv_viewer IS SUPPLIED.
+
+    CALL METHOD me-&gt;handler
+      EXPORTING
+        iv_viewer      = iv_viewer
+        iv_details     = iv_details
+      RECEIVING
+        rs_parameters  = ls_message-params
+      EXCEPTIONS
+        unknown_hander = 1
+        packing_error  = 2
+        OTHERS         = 3.
+
+    CASE sy-subrc.
+      WHEN 0.
+      WHEN 1.      RAISE unknown_hander.
+      WHEN 2.      RAISE packing_error.
+      WHEN OTHERS. RAISE processing_error.
+    ENDCASE.
+
+  ENDIF.
+
+  &quot; Write message into log --------------------------------------------
+
+  CALL FUNCTION &apos;BAL_LOG_MSG_ADD&apos;
+    EXPORTING
+      i_log_handle     = av_log_handle
+      i_s_msg          = ls_message
+    EXCEPTIONS
+      log_not_found    = 1
+      msg_inconsistent = 2
+      log_is_full      = 3
+      OTHERS           = 4.
+
+  IF sy-subrc &lt;&gt; 0.
+    RAISE processing_error.
+  ENDIF.
+
+ENDMETHOD.</source>
+  </method>
+ </CLAS>
+ <FUGR AREA="ZBC_LOG_HANDLERS" SPRAS="E" AREAT="View Handlers for Log Details">
+  <mainprogram NAME="SAPLZBC_LOG_HANDLERS" VARCL="X" DBAPL="S" DBNA="D$" SUBC="F" APPL="S" CNAM="NIKOLAY" CDAT="20141009" UNAM="NIKOLAY" UDAT="20141010" VERN="000005" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20141010" STIME="153030" IDATE="20141010" ITIME="153030" LDBNAME="D$S" UCCHECK="X">
+   <source>*******************************************************************
+*   System-defined Include-files.                                 *
+*******************************************************************
+  INCLUDE LZBC_LOG_HANDLERSTOP.              &quot; Global Data
+  INCLUDE LZBC_LOG_HANDLERSUXX.              &quot; Function Modules
+
+*******************************************************************
+*   User-defined Include-files (if necessary).                    *
+*******************************************************************
+* INCLUDE LZBC_LOG_HANDLERSF...              &quot; Subroutines
+* INCLUDE LZBC_LOG_HANDLERSO...              &quot; PBO-Modules
+* INCLUDE LZBC_LOG_HANDLERSI...              &quot; PAI-Modules
+* INCLUDE LZBC_LOG_HANDLERSE...              &quot; Events
+* INCLUDE LZBC_LOG_HANDLERSP...              &quot; Local class implement.
+
+*INCLUDE LZBC_LOG_HANDLERSF01.</source>
+  </mainprogram>
+  <includeprograms>
+   <include NAME="LZBC_LOG_HANDLERSTOP" VARCL="X" DBAPL="S" DBNA="D$" SUBC="I" APPL="S" CNAM="NIKOLAY" CDAT="20141009" UNAM="NIKOLAY" UDAT="20141010" VERN="000004" RMAND="001" FIXPT="X" SDATE="20141010" STIME="144301" IDATE="20141010" ITIME="144301" LDBNAME="D$S" UCCHECK="X">
+    <include_source>FUNCTION-POOL zbc_log_handlers MESSAGE-ID zbc_cl_log_msgs.
+
+* INCLUDE LZBC_LOG_HANDLERSD...              &quot; Local class definition
+
+TYPES
+  : spar_tab TYPE STANDARD TABLE OF spar.</include_source>
+   </include>
+  </includeprograms>
+  <functionmodules>
+   <functionmodule NAME="ZBC_LOG_VIEWER_XML_XSTRING" STEXT="XML – Viewer">
+    <paraImporting PARAMETER="I_DATA" REFERENCE="X" TYP="XSTRING"/>
+    <paraDocumentation PARAMETER="I_DATA" KIND="P" INDEX=" 001"/>
+    <fm_source>CALL FUNCTION &apos;DISPLAY_XML_STRING&apos;
+    EXPORTING
+      xml_string = i_data
+    EXCEPTIONS
+      OTHERS     = 0.</fm_source>
+   </functionmodule>
+   <functionmodule NAME="ZBC_LOG_DETAILS_HANDLER" STEXT="XML – Viewer">
+    <paraTables PARAMETER="I_T_PARAMS" DBSTRUCT="SPAR"/>
+    <paraDocumentation PARAMETER="I_T_PARAMS" KIND="P" STEXT="Interface for function group SP06" INDEX=" 001"/>
+    <fm_source>DATA
+    : ls_parameter TYPE spar
+    , lv_fm_name   TYPE eu_lname
+    , ls_log_data  TYPE zbc_log_data
+    , ls_interface TYPE rsfbintfv
+    , ls_type_info TYPE rsfbpara
+    , lr_content   TYPE REF TO data.
+
+  FIELD-SYMBOLS
+    : &lt;fs_content&gt; TYPE any.
+
+  READ TABLE i_t_params INTO ls_parameter
+    WITH KEY param = &apos;PACKAGE_ID&apos;.
+
+  CHECK sy-subrc EQ 0.
+
+  ls_log_data-package_id = ls_parameter-value.
+  SELECT SINGLE * INTO ls_log_data
+    FROM zbc_log_data
+   WHERE package_id = ls_log_data-package_id.
+
+  lv_fm_name = ls_log_data-viewer.
+  CALL METHOD cl_fb_function_utility=&gt;meth_get_interface
+    EXPORTING
+      im_name             = lv_fm_name
+    IMPORTING
+      ex_interface        = ls_interface
+    EXCEPTIONS
+      error_occured       = 1
+      object_not_existing = 2
+      OTHERS              = 99.
+
+  IF sy-subrc &lt;&gt; 0.
+    MESSAGE w001 WITH ls_log_data-viewer.
+    EXIT.
+  ENDIF.
+
+  READ TABLE ls_interface-import INTO ls_type_info
+    WITH KEY parameter = &apos;I_DATA&apos;.
+
+  IF sy-subrc &lt;&gt; 0 OR
+     ls_type_info-structure IS INITIAL.
+    MESSAGE w002 WITH ls_log_data-viewer.
+    EXIT.
+  ENDIF.
+
+  CREATE DATA lr_content TYPE (ls_type_info-structure).
+  ASSIGN lr_content-&gt;* TO &lt;fs_content&gt;.
+
+  TRY.
+      CALL TRANSFORMATION id
+        SOURCE XML ls_log_data-content
+        RESULT data = &lt;fs_content&gt;.
+    CATCH cx_root.
+      MESSAGE w003.
+      EXIT.
+  ENDTRY.
+
+  CALL FUNCTION ls_log_data-viewer
+    EXPORTING
+      i_data = &lt;fs_content&gt;.</fm_source>
+   </functionmodule>
+  </functionmodules>
+ </FUGR>
+ <MSAG ARBGB="ZBC_CL_LOG_MSGS" MASTERLANG="E" RESPUSER="NIKOLAY" LASTUSER="NIKOLAY" LDATE="20141010" LTIME="152949" STEXT="Message Class for ZCL_LOG">
+  <t100 SPRSL="E" ARBGB="ZBC_CL_LOG_MSGS" MSGNR="000" TEXT="&amp;1&amp;2&amp;3&amp;4&amp;5&amp;6&amp;7&amp;8"/>
+  <t100 SPRSL="E" ARBGB="ZBC_CL_LOG_MSGS" MSGNR="001" TEXT="Error while displaying message details: check FM &amp;1"/>
+  <t100 SPRSL="E" ARBGB="ZBC_CL_LOG_MSGS" MSGNR="002" TEXT="FM &amp;1 must have parameter named I_DATA w/dictionary or elementary type"/>
+  <t100 SPRSL="E" ARBGB="ZBC_CL_LOG_MSGS" MSGNR="003" TEXT="Read error while displaying message details"/>
+  <t100t SPRSL="E" ARBGB="ZBC_CL_LOG_MSGS" STEXT="Message Class for ZCL_LOG"/>
+  <documentation>
+   <docuItem ID="NA" OBJECT="ZBC_CL_LOG_MSGS000" LANGU="D" TYP="E" VERSION="0001" MASTERLANG="X" TXTLINES="00000" DOKSTATE="N" SELFDEF="3"/>
+   <docuItem ID="NA" OBJECT="ZBC_CL_LOG_MSGS001" LANGU="D" TYP="E" VERSION="0001" MASTERLANG="X" TXTLINES="00000" DOKSTATE="N" SELFDEF="3"/>
+   <docuItem ID="NA" OBJECT="ZBC_CL_LOG_MSGS002" LANGU="D" TYP="E" VERSION="0001" MASTERLANG="X" TXTLINES="00000" DOKSTATE="N" SELFDEF="3"/>
+   <docuItem ID="NA" OBJECT="ZBC_CL_LOG_MSGS003" LANGU="D" TYP="E" VERSION="0001" MASTERLANG="X" TXTLINES="00000" DOKSTATE="N" SELFDEF="3"/>
+  </documentation>
+ </MSAG>
+ <TABL TABNAME="ZBC_LOG_DATA" DDLANGUAGE="E" TABCLASS="TRANSP" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" CLIDEP="X" DDTEXT="Packaged Details" AUTHCLASS="00" AS4USER="NIKOLAY" AS4DATE="20141010" AS4TIME="142325" CONTFLAG="A" PROZPUFF="000" EXCLASS="1">
+  <dd09l TABNAME="ZBC_LOG_DATA" AS4LOCAL="A" AS4VERS="0000" TABKAT="4" TABART="APPL1" SCHFELDANZ="000" AS4USER="NIKOLAY" AS4DATE="20141010" AS4TIME="142325" BUFALLOW="N"/>
+  <dd03p TABNAME="ZBC_LOG_DATA" FIELDNAME="MANDT" DDLANGUAGE="E" POSITION="0001" KEYFLAG="X" ROLLNAME="MANDT" CHECKTABLE="T000" ADMINFIELD="0" INTTYPE="C" INTLEN="000006" NOTNULL="X" DOMNAME="MANDT" ROUTPUTLEN="000000" HEADLEN="03" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DTELMASTER="D" DATATYPE="CLNT" LENG="000003" OUTPUTLEN="000003" DECIMALS="000000" ENTITYTAB="T000" MASK="  CLNTE" MASKLEN="0000" DDTEXT="Client" REPTEXT="Cl." SCRTEXT_S="Client" SCRTEXT_M="Client" SCRTEXT_L="Client" DOMNAME3L="MANDT" SHLPORIGIN="P" DEPTH="00" COMPTYPE="E" DEFFDNAME="CLIENT" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZBC_LOG_DATA" FIELDNAME="PACKAGE_ID" DDLANGUAGE="E" POSITION="0002" KEYFLAG="X" ROLLNAME="GUID_32" ADMINFIELD="0" INTTYPE="C" INTLEN="000064" NOTNULL="X" DOMNAME="SYSUUID_C" ROUTPUTLEN="000000" HEADLEN="07" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DTELMASTER="D" DATATYPE="CHAR" LENG="000032" OUTPUTLEN="000032" DECIMALS="000000" MASK="  CHARE" MASKLEN="0000" DDTEXT="GUID in &apos;CHAR&apos; Format in Uppercase" REPTEXT="GUID 16" SCRTEXT_S="GUID 16" SCRTEXT_M="GUID 16" SCRTEXT_L="GUID 16" DOMNAME3L="SYSUUID_C" DEPTH="00" COMPTYPE="E" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZBC_LOG_DATA" FIELDNAME="LOG_HANDLE" DDLANGUAGE="E" POSITION="0003" ROLLNAME="BALLOGHNDL" ADMINFIELD="0" INTTYPE="C" INTLEN="000044" DOMNAME="SYSUUID_22" ROUTPUTLEN="000000" HEADLEN="25" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DTELMASTER="D" DATATYPE="CHAR" LENG="000022" OUTPUTLEN="000022" DECIMALS="000000" LOWERCASE="X" MASK="  CHARE" MASKLEN="0000" DDTEXT="Application Log: Log Handle" REPTEXT="Handle" SCRTEXT_S="Handle" SCRTEXT_M="Handle" SCRTEXT_L="Handle" DOMNAME3L="SYSUUID_22" DEPTH="00" COMPTYPE="E" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZBC_LOG_DATA" FIELDNAME="VIEWER" DDLANGUAGE="E" POSITION="0004" ROLLNAME="RS38L_FNAM" ADMINFIELD="0" INTTYPE="C" INTLEN="000060" DOMNAME="FUNCNAME" ROUTPUTLEN="000000" MEMORYID="LIB" HEADLEN="55" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DTELMASTER="D" DATATYPE="CHAR" LENG="000030" OUTPUTLEN="000030" DECIMALS="000000" ENTITYTAB="TFDIR" MASK="  CHARE" MASKLEN="0000" DDTEXT="Name of Function Module" REPTEXT="Function Module Name" SCRTEXT_S="FM Name" SCRTEXT_M="Function Module" SCRTEXT_L="Function Module" DOMNAME3L="FUNCNAME" DEPTH="00" COMPTYPE="E" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZBC_LOG_DATA" FIELDNAME="CONTENT" DDLANGUAGE="E" POSITION="0005" ADMINFIELD="0" INTTYPE="y" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="RSTR" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  RSTR" MASKLEN="0000" DDTEXT="Package Content" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd05m TABNAME="ZBC_LOG_DATA" FIELDNAME="MANDT" FORTABLE="ZBC_LOG_DATA" FORKEY="MANDT" CHECKTABLE="T000" CHECKFIELD="MANDT" PRIMPOS="0001" DOMNAME="MANDT" DATATYPE="CLNT" LENG="000003"/>
+  <dd08v TABNAME="ZBC_LOG_DATA" FIELDNAME="MANDT" DDLANGUAGE="E" CHECKTABLE="T000" DDTEXT="Client"/>
+ </TABL>
+</nugget>
+
